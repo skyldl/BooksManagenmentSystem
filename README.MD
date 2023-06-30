@@ -1,4 +1,4 @@
-# 图书管理系统接口程序
+# 图书管理系统
 ## 项目介绍
 使用Java+SpringBoot+MyBatis+MySQL开发
 
