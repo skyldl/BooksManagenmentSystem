@@ -1,41 +1,99 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<!-- 这是一个Maven项目的POM文件，用于管理项目的依赖和构建配置 -->
+
+<!-- 指定POM文件的版本 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<!-- 指定POM文件的模型版本 -->
 	<modelVersion>4.0.0</modelVersion>
+
+	<!-- 定义父项目，该项目是Spring Boot的起始项目 -->
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.0.8</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<version>2.5.6</version>
+		<relativePath/> <!-- 从仓库中查找父项目 -->
+
 	</parent>
-	<groupId>com.example</groupId>
-	<artifactId>bms</artifactId>
+
+	<!-- 定义项目的groupId，用于唯一标识项目 -->
+	<groupId>com.example.bms</groupId>
+
+	<!-- 定义项目的artifactId，用于唯一标识项目 -->
+	<artifactId>BookManagerApi</artifactId>
+
+	<!-- 定义项目的版本号 -->
 	<version>0.0.1-SNAPSHOT</version>
+
+	<!-- 定义项目的名称 -->
 	<name>BooksManagenmentSystem</name>
+
+	<!-- 定义项目的描述 -->
 	<description>BooksManagenmentSystem</description>
+
+
+	<!-- 定义项目的属性，这里指定了Java的版本为17 -->
 	<properties>
-		<java.version>17</java.version>
+		<java.version>1.8</java.version>
 	</properties>
+
 	<dependencies>
+		<!--spring web起步依赖（包含了jackson）-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
+		<!--SpringBoot整合MyBatis起步依赖-->
 		<dependency>
-			<groupId>com.mysql</groupId>
-			<artifactId>mysql-connector-j</artifactId>
-			<scope>runtime</scope>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+			<version>2.0.0</version>
 		</dependency>
+		<!--SpringBoot整合Redis起步依赖-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+		<!--MySQL的驱动依赖-->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
 	</dependencies>
 
 	<build>
+		<defaultGoal>compile</defaultGoal>
+		<!--定义资源路径-->
+		<resources>
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.xml</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>*/*.*</include>
+					<include>*.*</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+		</resources>
 		<plugins>
+			<!--mybatis反向工程插件-->
+			<plugin>
+				<groupId>org.mybatis.generator</groupId>
+				<artifactId>mybatis-generator-maven-plugin</artifactId>
+				<version>1.3.6</version>
+				<configuration>
+					<!--配置文件的位置-->
+					<configurationFile>GeneratorMapper.xml</configurationFile>
+					<verbose>true</verbose>
+					<overwrite>true</overwrite>
+				</configuration>
+			</plugin>
+			<!--编译打包插件-->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
